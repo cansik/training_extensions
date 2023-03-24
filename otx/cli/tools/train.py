@@ -209,8 +209,6 @@ def main():  # pylint: disable=too-many-branches
     if args.enable_hpo:
         environment = run_hpo(args, environment, dataset, config_manager.data_config)
 
-    task = task_class(task_environment=environment, output_path=args.work_dir)
-
     if args.gpus:
         multigpu_manager = MultiGPUManager(main, args.gpus, args.rdzv_endpoint, args.base_rank, args.world_size)
         if template.task_type in (TaskType.ACTION_CLASSIFICATION, TaskType.ACTION_DETECTION):
@@ -219,7 +217,11 @@ def main():  # pylint: disable=too-many-branches
             multigpu_manager.is_available()
             and not template.task_type.is_anomaly  # anomaly tasks don't use this way for multi-GPU training
         ):
-            multigpu_manager.setup_multi_gpu_train(task.project_path, hyper_parameters if args.enable_hpo else None)
+            args.work_dir = multigpu_manager.setup_multi_gpu_train(
+                args.work_dir, hyper_parameters if args.enable_hpo else None
+            )
+
+    task = task_class(task_environment=environment, output_path=args.work_dir)
 
     output_model = ModelEntity(dataset, environment.get_model_configuration())
 
