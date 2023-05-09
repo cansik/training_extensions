@@ -71,6 +71,7 @@ from otx.api.serialization.label_mapper import label_schema_to_bytes
 from otx.api.usecases.evaluation.metrics_helper import MetricsHelper
 from otx.api.usecases.tasks.interfaces.export_interface import ExportType
 from otx.api.utils.dataset_utils import add_saliency_maps_to_dataset_item
+from otx.api.utils.time_utils import timeit
 from otx.cli.utils.multi_gpu import is_multigpu_child_process
 
 logger = get_logger()
@@ -401,6 +402,7 @@ class OTXDetectionTask(OTXTask, ABC):
         output_resultset.performance = metric.get_performance()
         logger.info("Evaluation completed")
 
+    @timeit
     def _add_predictions_to_dataset(
         self,
         prediction_results,

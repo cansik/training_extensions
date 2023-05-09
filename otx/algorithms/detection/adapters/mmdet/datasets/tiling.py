@@ -8,8 +8,7 @@ import tempfile
 import uuid
 from itertools import product
 from multiprocessing import Pool
-from time import time
-from typing import Callable, Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
 import numpy as np
 import pycocotools.mask as mask_util
@@ -17,24 +16,7 @@ from mmcv.ops import nms
 from mmdet.core import BitmapMasks, bbox2result
 from tqdm import tqdm
 
-
-def timeit(func) -> Callable:
-    """Decorator to measure time of function execution.
-
-    Args:
-        func: Function to be the target for measuring.
-
-    Returns:
-        Callable function with time measurement.
-    """
-
-    def wrapper(*args, **kwargs):
-        begin = time()
-        result = func(*args, **kwargs)
-        print(f"\n==== {func.__name__}: {time() - begin} sec ====\n")
-        return result
-
-    return wrapper
+from otx.api.utils.time_utils import timeit
 
 
 # pylint: disable=too-many-instance-attributes, too-many-arguments

@@ -336,10 +336,10 @@ def patch_tiling(config, hparams, dataset=None):
         if dataset and dataset.purpose != DatasetPurpose.INFERENCE and hparams.tiling_parameters.enable_adaptive_params:
             adaptive_tile_params(hparams.tiling_parameters, dataset)
 
-        if dataset and dataset.purpose == DatasetPurpose.INFERENCE:
-            config.get("data", ConfigDict()).get("val_dataloader", ConfigDict()).update(ConfigDict(samples_per_gpu=1))
-            config.get("data", ConfigDict()).get("test_dataloader", ConfigDict()).update(ConfigDict(samples_per_gpu=1))
-            config.get("data", ConfigDict(samples_per_gpu=1))
+        # if dataset and dataset.purpose == DatasetPurpose.INFERENCE:
+        #     config.get("data", ConfigDict()).get("val_dataloader", ConfigDict()).update(ConfigDict(samples_per_gpu=1))
+        #     config.get("data", ConfigDict()).get("test_dataloader", ConfigDict()).update(ConfigDict(samples_per_gpu=1))
+        #     config.get("data", ConfigDict(samples_per_gpu=1))
 
         if hparams.tiling_parameters.enable_tile_classifier:
             logger.info("Tile classifier enabled")

@@ -242,7 +242,7 @@ class MMDetectionTask(OTXDetectionTask):
 
         # FIXME: Currently detection do not support multi batch evaluation. This will be fixed
         if "val" in cfg.data:
-            cfg.data.val_dataloader["samples_per_gpu"] = 1
+            cfg.data.val_dataloader["samples_per_gpu"] = 4
 
         # TODO. This should be moved to configurer
         # TODO. Anchor clustering should be checked
@@ -332,7 +332,7 @@ class MMDetectionTask(OTXDetectionTask):
         cfg = self.configure(False, "test", None)
         logger.info("infer!")
 
-        samples_per_gpu = 1
+        samples_per_gpu = 4
 
         # Data loader
         mm_dataset = build_dataset(cfg.data.test)
