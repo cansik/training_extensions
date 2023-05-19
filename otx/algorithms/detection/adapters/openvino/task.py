@@ -669,7 +669,7 @@ class OpenVINODetectionTask(IDeploymentTask, IInferenceTask, IEvaluationTask, IO
                         os.path.join(
                             "python",
                             "model_wrappers",
-                            file_path.split("model_wrappers/")[1],
+                            file_path.split(f"model_wrappers{os.sep}")[1],
                         ),
                     )
             # python files
